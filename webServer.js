@@ -1,8 +1,7 @@
 //--IMPORTAR DEPENDENCIAS
 const express = require ('express')
 const dotenv = require ('dotenv').config
- 
-
+ const uuidv4 = require ('uuid/v4');
 // Configuracion inicial
 const server =express();
 // const listenPort = process.argv[2] || process.env.PORT || 8080;
@@ -55,11 +54,12 @@ MongoClient.connect(url, {useUnifiedTopology:true},function(err,db){
     //POST
     server.post('POST/create',(req,res) =>{
     //falta inserta id
-    let newInsert=`{name:${req.body.name},quote:${req.body.quote}}`;
+    let newId= uuidv4();
+    let newInsert=`{name:${req.body.name},quote:${req.body.quote},id:${newId}}`;
     dbo.collection("date").insertOne(newInsert,(error, res)=>{
       if(error){console.log("no funciona")}
     console.log("hecho")
-    db.close();
+   
 
     })
     })
@@ -86,6 +86,6 @@ MongoClient.connect(url, {useUnifiedTopology:true},function(err,db){
 
 
 
-
+//cerramos db  ()
    db.close();
 });     
